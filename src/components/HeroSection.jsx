@@ -8,8 +8,8 @@ export default function HeroSection({ title, subtitle, image }) {
 
   // Image resolution logic
   const heroImg =
-    image?.data?.attributes?.formats?.large?.url ||
-    image?.data?.attributes?.url ||
+    image?.data?.formats?.large?.url ||
+    image?.data?.url ||
     fallbackImg
 
   // Optional Strapi base URL (only applied if defined)

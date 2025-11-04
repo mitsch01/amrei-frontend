@@ -1,17 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home.jsx'
-import PortfolioIndex from './pages/PortfolioIndex.jsx'
-import PortfolioDetail from './pages/PortfolioDetail.jsx'
-import WorkshopIndex from './pages/WorkshopIndex.jsx'
-import WorkshopDetail from './pages/WorkshopDetail.jsx'
-import About from './pages/About.jsx'
-import Contact from './pages/Contact.jsx'
-import Impressum from './pages/Impressum.jsx'
-import Datenschutz from './pages/Datenschutz.jsx'
+import Indexpage from './pages/Indexpage.jsx'
+import Detailpage from './pages/Detailpage.jsx'
+import BasicPage from './pages/BasicPage.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 
 export default function App() {
+  const pages = ['about', 'contact', 'impressum', 'datenschutz']
+
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
@@ -19,14 +16,13 @@ export default function App() {
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/portfolio" element={<PortfolioIndex />} />
-            <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
-            <Route path="/workshops" element={<WorkshopIndex />} />
-            <Route path="/workshops/:slug" element={<WorkshopDetail />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/impressum" element={<Impressum />} />
-            <Route path="/datenschutz" element={<Datenschutz />} />
+            <Route path="/portfolio" element={<Indexpage />} />
+            <Route path="/portfolio/:slug" element={<Detailpage />} />
+            <Route path="/workshops" element={<Indexpage />} />
+            <Route path="/workshops/:slug" element={<Detailpage />} />
+            {pages.map(slug => (
+              <Route key={slug} path={`/${slug}`} element={<BasicPage slug={slug} />} />
+            ))}
           </Routes>
         </main>
         <Footer />
@@ -34,3 +30,5 @@ export default function App() {
     </Router>
   )
 }
+
+
