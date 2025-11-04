@@ -1,6 +1,7 @@
 import HeroSection from '../components/HeroSection'
 import FilterBar from '../components/FilterBar'
 import GalleryGrid from '../components/GalleryGrid'
+import Slider from '../components/Slider'
 import { useEffect, useState } from 'react'
 import { fetchAPI } from '../lib/api'
 
@@ -27,7 +28,6 @@ export default function Home() {
       <HeroSection title="Illustrationen & Workshops" subtitle='"Du kannst alles drehen! Außer die Welt, die dreht sich von ganz allein!" (Buchkinder Leipzig)' />
       <FilterBar tags={tags} current={filter} onChange={setFilter} />
       <GalleryGrid items={filtered} />
-
     </div>
   )
 }

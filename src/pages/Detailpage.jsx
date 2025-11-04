@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchAPI } from '../lib/api'
 import Slider from '../components/Slider'
+import { getArticlesByCategory } from '../lib/getArticlesByCategory'
 
 export default function DetailPage() {
   const { slug } = useParams()
@@ -11,28 +12,24 @@ export default function DetailPage() {
   useEffect(() => {
     async function loadArticles() {
       try {
-        // fetch article by slug
+        // fetch main article by slug
         const res = await fetchAPI(`articles?filters[slug][$eq]=${slug}&populate=*`)
-        const item = res?.data?.[0]
-        if (!item) return
+        const main = res?.data?.[0]
+        if (!main) return
 
-        setArticle(item)
+        setArticle(main)
 
-        // fetch related articles (based on categories)
-        if (item.categories?.length) {
-          const relRes = await fetchAPI('articles?populate=categories&pagination[limit]=10');
-          const filtered = (relRes?.data || []).filter(p =>
-            p.id !== item.id &&
-            p.categories?.some(c => item.categories.map(cat => cat.id).includes(c.id))
-          );
-          
-          setRelated(filtered)
+        // fetch related articles by category IDs
+        const categoryIds = main.categories?.map(c => c.id) || []
+        if (categoryIds.length > 0) {
+          const relatedArticles = await getArticlesByCategory({ categoryIds, limit: 10 })
+          // exclude the main article itself
+          setRelated(relatedArticles.filter(a => a.id !== main.id))
         }
       } catch (err) {
         console.error('Error fetching article detail:', err)
       }
     }
-
     loadArticles()
   }, [slug])
 

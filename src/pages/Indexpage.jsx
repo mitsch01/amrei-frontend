@@ -1,18 +1,24 @@
 import { useEffect, useState } from 'react'
-import { fetchAPI } from '../lib/api'
 import GalleryGrid from '../components/GalleryGrid'
+import { getArticlesByCategory } from '../lib/getArticlesByCategory'
 
-export default function IndexPage({category}) {
-const [articles, setArticles] = useState([])
-const [loading, setLoading] = useState(true)
+export default function IndexPage({ category }) {
+  const [articles, setArticles] = useState([])
+  const [loading, setLoading] = useState(true)
 
-useEffect(() => {
-  fetchAPI(`articles?filters[category][$eq]=${category}`)
-  .then(data => {
-    setArticles(data)
-    setLoading(false)
-  })
-}, [category])
+  useEffect(() => {
+    async function loadArticles() {
+      try {
+        const data = await getArticlesByCategory({ categoryNames: [category] })
+        setArticles(data)
+      } catch (err) {
+        console.error('Error fetching articles:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadArticles()
+  }, [category])
 
   if (loading) return <div className="py-12 px-4">Loading...</div>
 

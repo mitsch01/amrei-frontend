@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import ArticleCard from './ArticleCard'
 
 export default function Slider({ items }) {
   const safeItems = Array.isArray(items) ? items : []
@@ -12,30 +12,11 @@ export default function Slider({ items }) {
             No related work.
           </div>
         ) : (
-            safeItems.map(item => {
-              const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:1337'
-              const img =
-                item.cover?.formats?.small?.url
-                  ? `${baseURL}${item.cover.formats.small.url}`
-                  : item.cover?.url
-                    ? `${baseURL}${item.cover.url}`
-                    : '/fallback.jpg'
-
-              return (
-                <Link
-                  key={item.id}
-                  to={`/articles/${item.slug}`}
-                className="block rounded overflow-hidden bg-gray-50"
-              >
-                <img
-                  src={img}
-                  alt={item.title}
-                  className="w-full h-36 object-cover"
-                />
-                </Link>
+            safeItems.map(item => (
+              <ArticleCard key={item.id} item={item} />
+            ))
             )
-          })
-        )}
+          }
       </div>
     </div>
   )

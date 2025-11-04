@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
+import ArticleCard from './ArticleCard'
 
-export default function GalleryGrid({ items }) {
+export default function GalleryGrid({ items = [] }) {
   const safeItems = Array.isArray(items) ? items : []
 
   return (
@@ -11,31 +11,11 @@ export default function GalleryGrid({ items }) {
             No items found.
           </div>
         ) : (
-          safeItems.map(item => {
-            const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:1337'
-            const img =
-              item.cover?.formats?.small?.url
-                ? `${baseURL}${item.cover.formats.small.url}`
-                : item.cover?.url
-                  ? `${baseURL}${item.cover.url}`
-                  : '/fallback.jpg'
-
-            return (
-              <Link
-                key={item.id}
-                to={`/articles/${item.slug}`}
-                className="block overflow-hidden bg-gray-50"
-              >
-                <img
-                  src={img}
-                  alt={item.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-3 text-sm">{item.title}</div>
-              </Link>
-            )
-          })
+          safeItems.map(item => (
+            <ArticleCard key={item.id} item={item} />
+          ))
         )}
+
       </div>
     </div>
   )
