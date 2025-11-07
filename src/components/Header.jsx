@@ -34,7 +34,7 @@ export default function Header() {
         </div>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex gap-6 text-lg px-8">
+        <nav className="hidden md:flex gap-6 text-xl px-8">
           <NavLink to="/" className="nav-link">Home</NavLink>
           <NavLink to="/portfolio" className="nav-link">Portfolio</NavLink>
           <NavLink to="/workshop" className="nav-link">Workshops</NavLink>

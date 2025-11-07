@@ -1,16 +1,16 @@
 export default function FilterBar({ tags = [], current = 'all', onChange }) {
-  // Helper to capitalize the first letter
   const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1)
 
   return (
-    <div className="py-6 px-4">
+    <div className="pb-6">
       <div className="flex gap-3 flex-wrap">
         {/* "All" button */}
         <button
           onClick={() => onChange('all')}
-          className={`px-3 py-1 border rounded transition-colors duration-200 ${current === 'all'
-              ? 'bg-accent/50 border-accent text-accent-foreground'
-              : 'hover:bg-accent/20'
+          className={`px-4 py-2 border font-medium transition-all duration-300
+            ${current === 'all'
+              ? 'bg-[#0D0D0D] text-[#FFFFFF] border-[#0D0D0D]'
+            : ' border-[#0D0D0D] text-[#0D0D0D] hover:bg-[#F2A999] hover:text-[#FFFFFF] hover:border-[#F2A999]'
             }`}
         >
           All
@@ -21,9 +21,10 @@ export default function FilterBar({ tags = [], current = 'all', onChange }) {
           <button
             key={tag.id}
             onClick={() => onChange(tag.name)}
-            className={`px-3 py-1 border rounded transition-colors duration-200 ${current === tag.name
-                ? 'bg-accent/50 border-accent text-accent-foreground'
-                : 'hover:bg-accent/20'
+            className={`px-4 py-2 border font-medium transition-all duration-300
+              ${current === tag.name
+                ? 'bg-[#0D0D0D] text-[#FFFFFF] border-[#0D0D0D]'
+              : ' border-[#0D0D0D] text-[#0D0D0D] hover:bg-[#F2A999] hover:text-[#FFFFFF] hover:border-[#F2A999]'
               }`}
           >
             {capitalize(tag.name)}
