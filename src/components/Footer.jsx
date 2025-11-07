@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="mt-12 bg-[#B35548]">
+    <footer className="mt-12 bg-[#80B9BF]">
       <div className="p-8 flex flex-col md:flex-row justify-between items-start gap-6 text-white">
         <div>
           <div className="font-semibold">Amrei Fiedler</div>
@@ -22,3 +22,4 @@ export default function Footer() {
     </footer>
   )
 }
+

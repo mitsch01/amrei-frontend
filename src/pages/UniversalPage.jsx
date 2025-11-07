@@ -14,7 +14,6 @@ export default function UniversalPage() {
     async function loadData() {
       setLoading(true)
       try {
-        // 1️⃣ Fetch both: all "pages" and any "articles" linked to category
         const [articles, pagesRes] = await Promise.all([
           getArticlesByCategory({ categoryNames: [slug] }),
           fetchAPI('abouts?populate=*'),

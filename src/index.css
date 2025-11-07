@@ -1,4 +1,50 @@
 @import "tailwindcss";
 
-html, body, #root { height: 100%}
-body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+@layer components {
+  .nav-link {
+    @apply relative inline-block no-underline text-current transition-colors duration-300;
+  }
+
+  /* Exclude images and buttons inside nav links */
+  .nav-link img,
+  .nav-link button {
+    all: unset;
+    display: revert;
+  }
+
+  /* Animated underline */
+  .nav-link::after {
+    content: "";
+    @apply absolute left-0 bottom-0 h-[2px] w-0 bg-[#F2D377] transition-all duration-300;
+  }
+
+  /* Hover effect */
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  /* Active or current page */
+  .nav-link.active::after,
+  .nav-link[aria-current="page"]::after {
+    @apply w-full bg-[#0D0D0D];
+  }
+}
+
+/* Palette reference
+#80B9BF
+#D9BF41
+#F2D377
+#F2A999
+#0D0D0D
+#F2F2F2
+*/

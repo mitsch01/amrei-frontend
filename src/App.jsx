@@ -9,14 +9,14 @@ export default function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/articles/:slug" element={<DetailPage />} />
-            <Route path="/:slug" element={<UniversalPage />} />
-          </Routes>
-        </main>
+          <Header />
+          <main className="flex-1 max-w-6xl mx-auto">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/articles/:slug" element={<DetailPage />} />
+              <Route path="/:slug" element={<UniversalPage />} />
+            </Routes>
+          </main>
         <Footer />
       </div>
     </Router>

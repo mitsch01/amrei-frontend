@@ -25,7 +25,7 @@ export default function HeroSection({ title, subtitle, image }) {
 
   return (
     <section className="relative">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center pb-12">
         {/* Image */}
         <motion.div
           initial={{ opacity: 0 }}

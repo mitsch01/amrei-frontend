@@ -4,7 +4,7 @@ export default function GalleryGrid({ items = [] }) {
   const safeItems = Array.isArray(items) ? items : []
 
   return (
-    <div className="py-8 px-8">
+    <div>
       <div className="columns-2 md:columns-4 gap-6 space-y-6">
         {safeItems.length === 0 ? (
           <div className="text-center text-gray-500 py-8">
