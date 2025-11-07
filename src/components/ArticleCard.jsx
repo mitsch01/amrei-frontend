@@ -12,12 +12,12 @@ export default function ArticleCard({ item, className = '' }) {
   return (
     <Link
       to={`/articles/${item.slug}`}
-      className={`block rounded overflow-hidden bg-gray-50 ${className}`}
+      className={`block overflow-hidden bg-gray-50 ${className}`}
     >
       <img
         src={img}
         alt={item.title}
-        className="w-full h-36 object-cover"
+        className="w-full h-auto object-cover"
       />
     </Link>
   )

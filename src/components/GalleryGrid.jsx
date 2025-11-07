@@ -4,18 +4,19 @@ export default function GalleryGrid({ items = [] }) {
   const safeItems = Array.isArray(items) ? items : []
 
   return (
-    <div className="py-6 px-4">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="py-8 px-8">
+      <div className="columns-2 md:columns-4 gap-6 space-y-6">
         {safeItems.length === 0 ? (
-          <div className="col-span-full text-center text-gray-500 py-8">
+          <div className="text-center text-gray-500 py-8">
             No items found.
           </div>
         ) : (
           safeItems.map(item => (
-            <ArticleCard key={item.id} item={item} />
+            <div key={item.id} className="break-inside-avoid">
+              <ArticleCard item={item} />
+            </div>
           ))
         )}
-
       </div>
     </div>
   )

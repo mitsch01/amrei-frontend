@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { fetchAPI } from '../lib/api'
 import Slider from '../components/Slider'
 import { getArticlesByCategory } from '../lib/getArticlesByCategory'
+import { marked } from 'marked'
 
 export default function DetailPage() {
   const { slug } = useParams()
@@ -17,12 +18,14 @@ export default function DetailPage() {
         const main = res?.data?.[0]
         if (!main) return
 
+        console.log("Fetched article:", main)
+
         setArticle(main)
 
         // fetch related articles by category IDs
         const categoryIds = main.categories?.map(c => c.id) || []
         if (categoryIds.length > 0) {
-          const relatedArticles = await getArticlesByCategory({ categoryIds, limit: 10 })
+          const relatedArticles = await getArticlesByCategory({ categoryIds })
           // exclude the main article itself
           setRelated(relatedArticles.filter(a => a.id !== main.id))
         }
@@ -36,11 +39,10 @@ export default function DetailPage() {
   if (!article) return <div className="py-12 text-center">Loading…</div>
 
   const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:1337'
-  const images = Array.isArray(article.images) && article.images.length > 0
-    ? article.images
-    : article.cover
-      ? [article.cover]
-      : []
+  const images = [
+    ...(article.cover ? [article.cover] : []),
+    ...(Array.isArray(article.media) ? article.media : [])
+  ]
 
   return (
     <div className="py-12 px-4">
@@ -69,7 +71,9 @@ export default function DetailPage() {
         {/* Text details */}
         <aside className="md:col-span-1">
           <h1 className="text-2xl font-semibold">{article.title}</h1>
-          <div className="mt-4 text-gray-700 whitespace-pre-line">{article.blocks?.length ? article.blocks.map(block => block.body).join('') : 'No content available.'}</div>
+          <div className="mt-4 text-gray-700 space-y-4"
+            dangerouslySetInnerHTML={{ __html: marked(article.body) || 'No content available.' }}
+          />
         </aside>
       </div>
 
