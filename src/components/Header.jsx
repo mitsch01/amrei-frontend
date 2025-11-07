@@ -37,7 +37,7 @@ export default function Header() {
         <nav className="hidden md:flex gap-6 text-sm">
           <Link to="/">Home</Link>
           <Link to="/portfolio">Portfolio</Link>
-          <Link to="/workshops">Workshops</Link>
+          <Link to="/workshop">Workshops</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
         </nav>
