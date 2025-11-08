@@ -13,7 +13,7 @@ export default function GalleryGrid({ items = [] }) {
         ) : (
           safeItems.map(item => (
             <div key={item.id} className="break-inside-avoid">
-              <ArticleCard item={item} />
+              <ArticleCard key={item.id} item={item} showMeta={false} />
             </div>
           ))
         )}
