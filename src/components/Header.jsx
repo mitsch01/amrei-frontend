@@ -13,7 +13,6 @@ export default function Header() {
         const res = await fetchAPI('global?populate=logo')
         const logoData = res?.data?.logo
         if (logoData) setLogo(`${baseURL}${logoData.url}`)
-        console.log(res)
       } catch (err) {
         console.error('Error fetching logo:', err)
       }

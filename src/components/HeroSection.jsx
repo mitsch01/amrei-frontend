@@ -7,20 +7,18 @@ export default function HeroSection({ title, subtitle, image }) {
   const fallbackTitle = 'Illustrationen & Projekte'
   const fallbackSubtitle = 'Eine Auswahl meiner Arbeiten. Workshops und mehr.'
 
-  // Image resolution logic
-  const heroImg =
-    image?.data?.formats?.large?.url ||
-    image?.data?.url ||
+  const baseUrl = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
+
+  const heroImage =
+    image?.formats?.large?.url ||
+    image?.url ||
     fallbackImg
 
-  // Optional Strapi base URL (only applied if defined)
-  const baseUrl = import.meta.env.VITE_STRAPI_URL
   const fullImageUrl =
-    heroImg.startsWith('http') || !baseUrl
-      ? heroImg
-      : `${baseUrl}${heroImg}`
+    heroImage.startsWith('http') || !baseUrl
+      ? heroImage
+      : `${baseUrl}${heroImage}`
 
-  // Text fallbacks
   const heroTitle = title?.trim() || fallbackTitle
   const heroSubtitle = subtitle?.trim() || fallbackSubtitle
 

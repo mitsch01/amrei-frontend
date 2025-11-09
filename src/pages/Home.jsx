@@ -8,6 +8,20 @@ export default function Home() {
   const [projects, setProjects] = useState([])
   const [filter, setFilter] = useState('all')
   const [tags, setTags] = useState([])
+  const [home, setHome] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function loadHome() {
+      try {
+        const res = await fetchAPI('home?populate=*')
+        setHome(res?.data || null)
+      } catch (err) {
+        console.error('Error fetching home data:', err)
+      }
+    }
+    loadHome()
+  }, [])
 
   useEffect(() => {
     async function loadArticles() {
@@ -24,13 +38,21 @@ export default function Home() {
         setTags(uniqueCategories)
       } catch (err) {
         console.error('Error fetching articles:', err)
+      } finally {
+        setLoading(false)
       }
     }
-
     loadArticles()
   }, [])
 
-  // Filter projects by selected category name
+  // --- Handle loading state ---
+  if (loading || !home)
+    return <div className="py-12 text-center">Loading…</div>
+
+  // --- Extract home fields ---
+  const { heroTitle, heroSubtitle, heroImage } = home || {}
+
+  // --- Filter articles ---
   const filtered =
     filter === 'all'
       ? projects
@@ -41,8 +63,9 @@ export default function Home() {
   return (
     <div className='max-w-6xl mx-auto'>
       <HeroSection
-        title="Illustrationen & Workshops"
-        subtitle='"Du kannst alles drehen! Außer die Welt, die dreht sich von ganz allein!" (Buchkinder Leipzig)'
+        title={heroTitle}
+        subtitle={heroSubtitle}
+        image={heroImage}
       />
 
       <FilterBar tags={tags} current={filter} onChange={setFilter} />
