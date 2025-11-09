@@ -10,7 +10,6 @@ export default function HeroSection({ title, subtitle, image }) {
   const baseUrl = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
 
   const heroImage =
-    image?.formats?.large?.url ||
     image?.url ||
     fallbackImg
 
@@ -24,12 +23,12 @@ export default function HeroSection({ title, subtitle, image }) {
 
   return (
     <section className="relative">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center pb-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center pb-18">
         {/* Image */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="w-full"
+          className="w-[140%]"
         >
           <img
             src={fullImageUrl}

@@ -7,10 +7,10 @@ export default function FilterBar({ tags = [], current = 'all', onChange }) {
         {/* "All" button */}
         <button
           onClick={() => onChange('all')}
-          className={`px-4 py-2 border font-medium transition-all duration-300
+          className={`px-4 py-2 border font-medium 
             ${current === 'all'
               ? 'bg-[#0D0D0D] text-[#FFFFFF] border-[#0D0D0D]'
-            : ' border-[#0D0D0D] text-[#0D0D0D] hover:bg-[#F2A999] hover:text-[#FFFFFF] hover:border-[#F2A999]'
+            : ' border-[#0D0D0D] text-[#0D0D0D] hover:bg-[#F2D377] hover:text-[#0D0D0D] hover:border-[#F2D377]'
             }`}
         >
           All
@@ -21,10 +21,10 @@ export default function FilterBar({ tags = [], current = 'all', onChange }) {
           <button
             key={tag.id}
             onClick={() => onChange(tag.name)}
-            className={`px-4 py-2 border font-medium transition-all duration-300
+            className={`px-4 py-2 border font-medium 
               ${current === tag.name
                 ? 'bg-[#0D0D0D] text-[#FFFFFF] border-[#0D0D0D]'
-              : ' border-[#0D0D0D] text-[#0D0D0D] hover:bg-[#F2A999] hover:text-[#FFFFFF] hover:border-[#F2A999]'
+              : ' border-[#0D0D0D] text-[#0D0D0D] hover:bg-[#F2D377] hover:text-[#0D0D0D] hover:border-[#F2D377]'
               }`}
           >
             {capitalize(tag.name)}

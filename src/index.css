@@ -33,7 +33,7 @@ body {
   /* Animated underline */
   .nav-link::after {
     content: "";
-    @apply absolute left-0 -bottom-[2.5px] h-[2px] w-0 bg-[#F2D377] transition-all duration-300;
+    @apply absolute left-0 -bottom-[2.5px] h-[2px] w-0 bg-[#F2A999] transition-all duration-300;
   }
 
   /* Hover effect */
