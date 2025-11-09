@@ -65,14 +65,13 @@ export default function DetailPage() {
   const nextImage = () => setCurrentIndex((i) => (i === images.length - 1 ? 0 : i + 1))
 
   return (
-    <div className="py-12 px-4">
+    <div className="py-12 px-4 max-w-6xl mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
         {/* Galerie */}
         <div className="md:col-span-2">
-          <div className="columns-1 sm:columns-2 gap-4 space-y-4">
+          <div className="columns-1 sm:columns-2 md:columns-2 gap-4 space-y-4">
             {images.map((img, index) => (
-
               <div
                 key={img.id || index}
                 className="break-inside-avoid cursor-pointer"
@@ -85,12 +84,11 @@ export default function DetailPage() {
                 />
               </div>
             ))}
-
           </div>
         </div>
 
         {/* Text */}
-        <aside className="md:col-span-1">
+        <aside className="md:col-span-1 md:sticky top-20 self-start">
           <h1 className="text-2xl font-semibold">{article.title}</h1>
           <div
             className="mt-4 text-gray-700 space-y-4 prose max-w-none"

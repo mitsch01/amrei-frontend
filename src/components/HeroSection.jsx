@@ -50,7 +50,7 @@ export default function HeroSection({ title, subtitle, image }) {
           <h1 className="text-4xl font-bold mb-4">
             {heroTitle}
           </h1>
-          <p className="text-lg text-gray-700 max-w-xl">
+          <p className="text-lg text-gray-700 max-w-xl italic">
             {heroSubtitle}
           </p>
         </motion.div>

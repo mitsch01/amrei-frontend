@@ -25,7 +25,7 @@ export default function Header() {
     <header>
       {/* Navigation */}
       <div className="flex items-center justify-between py-6 max-w-6xl mx-auto">
-        
+
         {/* Logo */}
         <div className="flex items-center justify-between">
           <Link to="/" className="text-xl font-semibold">
@@ -36,8 +36,10 @@ export default function Header() {
         {/* Desktop nav */}
         <nav className="hidden md:flex gap-6 text-xl px-8">
           <NavLink to="/" className="nav-link">Home</NavLink>
-          <NavLink to="/portfolio" className="nav-link">Portfolio</NavLink>
+          {/* <NavLink to="/portfolio" className="nav-link">Portfolio</NavLink> */}
           <NavLink to="/workshop" className="nav-link">Workshops</NavLink>
+          <NavLink to="/book" className="nav-link">Books</NavLink>
+          <NavLink to="/collaboration">Collaborations</NavLink>
           <NavLink to="/about" className="nav-link">About</NavLink>
           <NavLink to="/contact" className="nav-link">Contact</NavLink>
         </nav>

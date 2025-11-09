@@ -43,7 +43,7 @@ export default function UniversalPage() {
   // 🟢 CATEGORY PAGE (Portfolio / Workshops)
   if (data.articles.length > 0) {
     return (
-      <div className="py-12 px-4">
+      <div className="py-12 px-4 max-w-6xl mx-auto">
         {/* Intro from page (if available) */}
         {data.page && (
           <>
@@ -71,7 +71,7 @@ export default function UniversalPage() {
   // 🟠 BASIC PAGE (About, Contact, etc.)
   if (data.page) {
     return (
-      <div className="py-12 px-4">
+      <div className="py-12 px-4 max-w-6xl mx-auto">
         <h2 className="text-2xl font-semibold mb-4">{data.page.title}</h2>
         {data.page.quote && <p className="text-gray-700 mb-4">{data.page.quote}</p>}
         <div
@@ -83,5 +83,5 @@ export default function UniversalPage() {
   }
 
   // 🔴 Not found
-  return <div className="py-12 px-4">Page not found</div>
+  return <div className="py-12 px-4 max-w-6xl mx-auto">Page not found</div>
 }

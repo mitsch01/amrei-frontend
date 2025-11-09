@@ -47,10 +47,10 @@ export default function Lightbox({ images, currentIndex, onClose, onPrev, onNext
           <motion.div
             key={current.url}
             className="relative w-fit max-w-4xl"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
             onClick={(e) => e.stopPropagation()}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
@@ -71,7 +71,7 @@ export default function Lightbox({ images, currentIndex, onClose, onPrev, onNext
             </button>
 
             {/* Footer White Bar */}
-            <div className="absolute -bottom-12 left-0 right-0 bg-white h-12 flex items-center justify-between px-4">
+            <div className="absolute bottom-0 left-0 right-0 bg-white h-12 flex items-center justify-between px-4">
               {/* Left: Arrows */}
               <div className="flex gap-2 items-center">
                 <button onClick={onPrev} aria-label="Previous image" className="text-black hover:text-[#F2D377]">

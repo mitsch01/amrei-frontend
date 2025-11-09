@@ -10,7 +10,7 @@ export default function App() {
     <Router>
       <div className="min-h-screen flex flex-col">
           <Header />
-          <main className="flex-1 max-w-6xl mx-auto">
+        <main className="flex-1">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/articles/:slug" element={<DetailPage />} />

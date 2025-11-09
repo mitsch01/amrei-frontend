@@ -39,7 +39,7 @@ export default function Home() {
       )
 
   return (
-    <div>
+    <div className='max-w-6xl mx-auto'>
       <HeroSection
         title="Illustrationen & Workshops"
         subtitle='"Du kannst alles drehen! Außer die Welt, die dreht sich von ganz allein!" (Buchkinder Leipzig)'
