@@ -1,6 +1,7 @@
 export const pages = [
-  { slug: 'portfolio', label: 'Portfolio' },
+  { slug: 'books', label: 'Books' },
   { slug: 'workshops', label: 'Workshops' },
+  { slug: 'collaborations', label: 'Collaborations' },
   { slug: 'about', label: 'About' },
   { slug: 'contact', label: 'Contact' }
 ]

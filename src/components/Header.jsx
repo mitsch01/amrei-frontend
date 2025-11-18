@@ -23,12 +23,12 @@ export default function Header() {
   return (
     <header>
       {/* Navigation */}
-      <div className="flex items-center justify-between py-6 max-w-6xl mx-auto">
+      <div className="flex items-center justify-between pt-24 pb-8 max-w-6xl mx-auto">
 
         {/* Logo */}
         <div className="flex items-center justify-between">
           <Link to="/" className="text-xl font-semibold">
-            <img src={logo} alt="Amrei Fiedler" className="h-36" />
+            <img src={logo} alt="Amrei Fiedler" className="h-28 pb-2 pl-4" />
           </Link>
         </div>
 
@@ -36,9 +36,9 @@ export default function Header() {
         <nav className="hidden md:flex gap-6 text-xl px-8">
           <NavLink to="/" className="nav-link">Home</NavLink>
           {/* <NavLink to="/portfolio" className="nav-link">Portfolio</NavLink> */}
-          <NavLink to="/workshop" className="nav-link">Workshops</NavLink>
-          <NavLink to="/book" className="nav-link">Books</NavLink>
-          <NavLink to="/collaboration">Collaborations</NavLink>
+          <NavLink to="/books" className="nav-link">Books</NavLink>
+          <NavLink to="/workshops" className="nav-link">Workshops</NavLink>
+          <NavLink to="/collaborations">Collaborations</NavLink>
           <NavLink to="/about" className="nav-link">About</NavLink>
           <NavLink to="/contact" className="nav-link">Contact</NavLink>
         </nav>
@@ -57,8 +57,9 @@ export default function Header() {
       {open && (
         <div className="md:hidden p-4 border-t">
           <NavLink to="/" className="nav-link">Home</NavLink>
-          <NavLink to="/portfolio" className="nav-link">Portfolio</NavLink>
+          <NavLink to="/books" className="nav-link">Books</NavLink>
           <NavLink to="/workshops" className="nav-link">Workshops</NavLink>
+          <NavLink to="/collaborations">Collaborations</NavLink>
           <NavLink to="/about" className="nav-link">About</NavLink>
           <NavLink to="/contact" className="nav-link">Contact</NavLink>
         </div>

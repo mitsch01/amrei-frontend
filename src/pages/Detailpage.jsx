@@ -45,15 +45,18 @@ export default function DetailPage() {
   const images = [
     ...(article.cover ? [article.cover] : []),
     ...(Array.isArray(article.media) ? article.media : []),
-  ].map((img) => {
-    const url =
-      img.formats?.large?.url
-        ? `${baseURL}${img.formats.large.url}`
-        : img.url
-          ? `${baseURL}${img.url}`
-          : '/fallback.jpg'
-    return { ...img, url }
-  })
+  ].filter(m => m.mime?.includes('image'))
+    .map(img => ({
+      ...img,
+      url: img.formats?.large?.url ? `${baseURL}${img.formats.large.url}` : `${baseURL}${img.url}`
+    }));
+
+  const videos = Array.isArray(article.videoUrl) ? article.videoUrl : [];
+
+  const galleryItems = [
+    ...videos.map(v => ({ ...v, type: 'video' })),
+    ...images.map(i => ({ ...i, type: 'image' }))
+  ]
 
   const openLightbox = (index) => {
     setCurrentIndex(index)
@@ -66,10 +69,30 @@ export default function DetailPage() {
 
   return (
     <div className="py-12 px-4 max-w-6xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-        {/* Galerie */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        {/* Main content: Videos + Gallery */}
         <div className="md:col-span-2">
+          {/* Video(s) */}
+          {videos.length > 0 && (
+            <div className="mb-4">
+              {videos.map((url, idx) => {
+                // extract videoId from YouTube URL for embedding
+                const videoId = url.split('v=')[1] || url.split('/').pop();
+                return (
+                  <iframe
+                    key={idx}
+                    width="100%"
+                    height="400"
+                    src={`https://www.youtube.com/embed/${videoId}`}
+                    title={`Video ${idx + 1}`}
+                    allowFullScreen
+                  ></iframe>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Gallery */}
           <div className="columns-1 sm:columns-2 md:columns-2 gap-4 space-y-4">
             {images.map((img, index) => (
               <div
@@ -107,7 +130,7 @@ export default function DetailPage() {
       {/* Lightbox */}
       {lightboxOpen && (
         <Lightbox
-          images={images}
+          images={galleryItems}
           currentIndex={currentIndex}
           onClose={closeLightbox}
           onPrev={prevImage}

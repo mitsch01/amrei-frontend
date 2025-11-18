@@ -9,13 +9,13 @@ import { fetchAPI } from './api'
  * @param {number} [options.limit] - pagination limit
  * @returns {Promise<Array>} - array of article objects
  */
-export async function getArticlesByCategory({ categoryIds = [], categoryNames = [] } = {}) {
+export async function getArticlesByCategory({ categoryIds = [], categorySlugs = [] } = {}) {
   let url = `articles?populate=*`
 
   if (categoryIds.length > 0) {
     url += `&filters[categories][id][$in]=${categoryIds.join(',')}`
-  } else if (categoryNames.length > 0) {
-    url += `&filters[categories][name][$in]=${categoryNames.join(',')}`
+  } else if (categorySlugs.length > 0) {
+    url += `&filters[categories][slug][$in]=${categorySlugs.join(',')}`
   }
 
   const res = await fetchAPI(url)

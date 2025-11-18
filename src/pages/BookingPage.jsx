@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchAPI } from '../lib/api'
 import { getArticlesByCategory } from '../lib/getArticlesByCategory'
-import GalleryGrid from '../components/GalleryGrid'
 import { marked } from 'marked'
 
-export default function UniversalPage() {
+export default function BookingPage() {
   const { slug } = useParams()
   const [data, setData] = useState({ articles: [], page: null })
   const [loading, setLoading] = useState(true)
@@ -49,9 +48,6 @@ export default function UniversalPage() {
           className="prose text-gray-700 max-w-none"
           dangerouslySetInnerHTML={{ __html: marked(data.page.body || '') }}
         />
-        <button className="bg-black text-white border border-black mt-8 px-6 py-2 rounded font-semibold hover:bg-white hover:text-black transition-colors duration-300">
-          Jetzt buchen
-        </button>      
       </div>
     )
   }

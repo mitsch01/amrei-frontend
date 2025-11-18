@@ -12,35 +12,29 @@ export default function ArticleCard({ item, className = '' }) {
   return (
     <Link
       to={`/articles/${item.slug}`}
-      className={`group relative block overflow-hidden bg-gray-100 shadow-sm ${className}`}
+      className={`group relative block overflow-hidden 
+     ${className}`}
     >
       {/* Bild */}
       <img
         src={img}
         alt={item.title}
-        className="w-full h-auto object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+        className="w-full h-auto object-cover"
       />
 
       {/* Overlay */}
-      <div className="
-        absolute inset-0 flex flex-col justify-end 
-        bg-gradient-to-t from-black/70 via-black/40 to-transparent 
-        opacity-0 group-hover:opacity-100 
-        transition-opacity duration-500 ease-in-out
-        p-4 sm:p-6
-      ">
-        <div className="text-white">
+      <div className="absolute inset-4 bg-white bg-opacity-90 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div>
+          {/* Titel */}
+          <h3 className="text-lg sm:text-xl font-semibold leading-tight mx-4">
+            {item.title}
+          </h3>
           {/* Kategorien */}
           {item.categories && item.categories.length > 0 && (
-            <div className="text-xs uppercase tracking-wider text-[#F2D377] mb-1 font-medium">
+            <div className="text-xs uppercase tracking-wider text-[#F2D377] mb-2 font-medium mx-4">
               {item.categories.map((cat) => cat.name).join(', ')}
             </div>
           )}
-
-          {/* Titel */}
-          <h3 className="text-lg sm:text-xl font-semibold leading-tight">
-            {item.title}
-          </h3>
         </div>
       </div>
     </Link>
