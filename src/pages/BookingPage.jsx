@@ -1,41 +1,9 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { fetchAPI } from '../lib/api'
-import { getArticlesByCategory } from '../lib/getArticlesByCategory'
 import { marked } from 'marked'
+import GalleryGrid from '../components/GalleryGrid'
+import { useUniversalPage } from '../lib/useUniversalPage'
 
-export default function BookingPage() {
-  const { slug } = useParams()
-  const [data, setData] = useState({ articles: [], page: null })
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    async function loadData() {
-      setLoading(true)
-      try {
-        const [articles, pagesRes] = await Promise.all([
-          getArticlesByCategory({ categoryNames: [slug] }),
-          fetchAPI('abouts?populate=*'),
-        ])
-
-        const pages = pagesRes?.data || []
-        const matchedPage = pages.find(
-          (p) => p.slug === slug
-        )
-
-        setData({
-          articles,
-          page: matchedPage || null,
-        })
-      } catch (err) {
-        console.error('Error loading UniversalPage:', err)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadData()
-  }, [slug])
+export default function BookingPage({slug}) {
+ const {data, loading} = useUniversalPage(slug)
 
   if (loading) return <div className="py-12 px-4">Loading…</div>
 
@@ -48,6 +16,10 @@ export default function BookingPage() {
           className="prose text-gray-700 max-w-none"
           dangerouslySetInnerHTML={{ __html: marked(data.page.body || '') }}
         />
+        <button className="bg-black text-white border border-black mt-8 px-6 py-2 rounded font-semibold hover:bg-white hover:text-black transition-colors duration-300">
+          Jetzt buchen
+        </button> 
+        <GalleryGrid items={slug}/>
       </div>
     )
   }

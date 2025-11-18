@@ -1,21 +1,9 @@
+import { getMediaUrl } from "../lib/media";
+
 export default function HeroSection({ title, subtitle, image }) {
-  const fallbackImg = '/images/hero_maedchen2024.jpg'
-  const fallbackTitle = 'Illustrationen & Projekte'
-  const fallbackSubtitle = 'Eine Auswahl meiner Arbeiten. Workshops und mehr.'
-
-  const baseUrl = import.meta.env.VITE_STRAPI_URL || "http://localhost:1337";
-
-  const heroImage =
-    image?.url ||
-    fallbackImg
-
-  const fullImageUrl =
-    heroImage.startsWith('http') || !baseUrl
-      ? heroImage
-      : `${baseUrl}${heroImage}`
-
-  const heroTitle = title?.trim() || fallbackTitle
-  const heroSubtitle = subtitle?.trim() || fallbackSubtitle
+  const heroImage = getMediaUrl(image)
+  const heroTitle = title?.trim()
+  const heroSubtitle = subtitle?.trim()
 
   return (
     <section className="relative">
@@ -23,7 +11,7 @@ export default function HeroSection({ title, subtitle, image }) {
         {/* Image */}
         <div className="md:col-span-4 pt-32 pb-24 w-[130%]">
           <img
-            src={fullImageUrl}
+            src={heroImage}
             alt={heroTitle}
             className="object-cover w-full h-auto pt-16"
           />

@@ -1,13 +1,8 @@
 import { Link } from 'react-router-dom'
+import { getMediaUrl } from '../lib/media'
 
 export default function ArticleCard({ item, className = '' }) {
-  const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:1337'
-  const img =
-    item.cover?.formats?.medium?.url
-      ? `${baseURL}${item.cover.formats.medium.url}`
-      : item.cover?.url
-        ? `${baseURL}${item.cover.url}`
-        : '/fallback.jpg'
+  const img = getMediaUrl(item.cover, 'medium')
 
   return (
     <Link

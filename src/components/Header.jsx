@@ -1,24 +1,13 @@
 import { NavLink, Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import { fetchAPI } from '../lib/api'
+import { useState } from 'react'
+import { useFetch } from '../lib/useFetch'
+import { getMediaUrl } from '../lib/media'
 
 export default function Header() {
   const [open, setOpen] = useState(false)
-  const [logo, setLogo] = useState(null)
-  const baseURL = import.meta.env.VITE_STRAPI_URL || 'http://localhost:1337'
+  const { data: globalData } = useFetch('global?populate=logo')
 
-  useEffect(() => {
-    async function loadLogo() {
-      try {
-        const res = await fetchAPI('global?populate=logo')
-        const logoData = res?.data?.logo
-        if (logoData) setLogo(`${baseURL}${logoData.url}`)
-      } catch (err) {
-        console.error('Error fetching logo:', err)
-      }
-    }
-    loadLogo()
-  }, [])
+  const logo = getMediaUrl(globalData?.logo)
 
   return (
     <header>
@@ -35,7 +24,6 @@ export default function Header() {
         {/* Desktop nav */}
         <nav className="hidden md:flex gap-6 text-xl px-8">
           <NavLink to="/" className="nav-link">Home</NavLink>
-          {/* <NavLink to="/portfolio" className="nav-link">Portfolio</NavLink> */}
           <NavLink to="/books" className="nav-link">Books</NavLink>
           <NavLink to="/workshops" className="nav-link">Workshops</NavLink>
           <NavLink to="/collaborations">Collaborations</NavLink>
