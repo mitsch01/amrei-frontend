@@ -1,3 +1,5 @@
+import { Play } from "lucide-react";
+
 export function ImageGallery({ images, onOpen }) {
   if (!images?.length) return null
 

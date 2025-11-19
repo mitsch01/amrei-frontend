@@ -1,68 +1,121 @@
 import { useMemo, useState } from "react"
+import { getEmbedUrl, getYoutubeId } from "./video"   // <-- updated import
 
 export function useMediaGallery(article) {
   const baseURL = import.meta.env.VITE_API_URL || "http://localhost:1337"
 
-  // Extract images
+  // ---------------------------
+  // IMAGES
+  // ---------------------------
   const images = useMemo(() => {
     if (!article) return []
 
     const rawImages = [
       ...(article.cover ? [article.cover] : []),
       ...(Array.isArray(article.media) ? article.media : []),
-    ].filter((m) => m.mime?.includes("image"))
+    ].filter(m => m.mime?.includes("image"))
 
-    return rawImages.map((img) => ({
-      ...img,
+    return rawImages.map(img => ({
       type: "image",
       url: img.formats?.large?.url
         ? `${baseURL}${img.formats.large.url}`
         : `${baseURL}${img.url}`,
+      thumbnail: img.formats?.small?.url
+        ? `${baseURL}${img.formats.small.url}`
+        : `${baseURL}${img.url}`,
+      alt: img.alternativeText || "",
+      id: img.id,
     }))
   }, [article, baseURL])
 
-  // Extract videos
+  // ---------------------------
+  // VIDEOS
+  // ---------------------------
   const videos = useMemo(() => {
     if (!article) return []
-    const rawVideos = Array.isArray(article.videoUrl) ? article.videoUrl : []
+    if (!Array.isArray(article.video)) return []
 
-    return rawVideos.map((v) => ({
-      ...v,
-      type: "video",
-    }))
-  }, [article])
+    return article.video.map(v => {
+      const id = getYoutubeId(v.videoLink)
+      const embedUrl = getEmbedUrl(v.videoLink)
 
-  // Combined gallery items
+      // Thumbnail logic:
+      const thumbnail =
+        v.cover
+          ? `${baseURL}${v.cover.url}`                           // Strapi custom cover
+          : id
+            ? `https://img.youtube.com/vi/${id}/hqdefault.jpg`  // YouTube generated
+            : "/fallback-video-thumbnail.jpg"                    // fallback
+
+      return {
+        type: "video",
+        id,
+        embedUrl,
+        url: v.videoLink,
+        thumbnail,
+        title: v.videoTitle,
+        position: v.position ?? 0,
+
+        safeLinkProps: {
+          target: "_blank",
+          rel: "noopener noreferrer",
+          referrerPolicy: "no-referrer",
+        }
+      }
+    })
+  }, [article, baseURL])
+
+
+  // Sorted by "position"
+  const sortedVideos = useMemo(() => {
+    return [...videos].sort((a, b) => a.position - b.position)
+  }, [videos])
+
+  // ---------------------------
+  // MERGED GALLERY (videos → images)
+  // ---------------------------
   const galleryItems = useMemo(() => {
-    return [...videos, ...images]
-  }, [videos, images])
+    return [...sortedVideos, ...images]
+  }, [sortedVideos, images])
 
-  // Lightbox state
+  // ---------------------------
+  // LIGHTBOX STATE
+  // ---------------------------
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const openLightbox = (index) => {
+  const openLightbox = index => {
     setCurrentIndex(index)
     setLightboxOpen(true)
   }
 
   const closeLightbox = () => setLightboxOpen(false)
 
-  const prevImage = () =>
-    setCurrentIndex((i) => (i === 0 ? images.length - 1 : i - 1))
+  // FIXED: must use galleryItems.length (not images.length)
+  const prev = () =>
+    setCurrentIndex(i =>
+      i === 0 ? galleryItems.length - 1 : i - 1
+    )
 
-  const nextImage = () =>
-    setCurrentIndex((i) => (i === images.length - 1 ? 0 : i + 1))
+  const next = () =>
+    setCurrentIndex(i =>
+      i === galleryItems.length - 1 ? 0 : i + 1
+    )
 
+  // ---------------------------
+  // RETURN API
+  // ---------------------------
   return {
     images,
-    videos,
+    videos: sortedVideos,
     galleryItems,
+
     lightboxOpen,
     currentIndex,
+
     openLightbox,
     closeLightbox,
-    nextImage,
-    prevImage,
+    prev,
+    next,
   }
 }

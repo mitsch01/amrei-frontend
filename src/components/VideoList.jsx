@@ -1,18 +1,23 @@
+import { getEmbedUrl } from "../lib/video"
+
 export function VideoList({ videos }) {
   if (!videos?.length) return null
 
   return (
-    <div className="mb-4 space-y-4">
-      {videos.map((url, idx) => {
-        const id = url.split('v=')[1] || url.split('/').pop()
+    <div className="mb-4 space-y-6">
+      {videos.map((v, idx) => {
+        const embed = getEmbedUrl(v.url)
+
         return (
-          <iframe
-            key={idx}
-            width="100%"
-            height="400"
-            src={`https://www.youtube.com/embed/${id}`}
-            allowFullScreen
-          />
+          <div key={idx} className="aspect-video w-full overflow-hidden shadow">
+            <iframe
+              src={embed}
+              className="w-full h-full"
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer"
+            />
+          </div>
         )
       })}
     </div>

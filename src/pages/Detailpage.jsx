@@ -11,6 +11,7 @@ import { ImageGallery } from '../components/ImageGallery'
 export default function DetailPage() {
   const { slug } = useParams()
   const { article, related, loading } = useArticleDetail(slug)
+  console.log(article)
 
   const {
     images,
