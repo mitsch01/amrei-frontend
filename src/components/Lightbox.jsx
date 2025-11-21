@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
+// eslint-disable-next-line
 import { AnimatePresence, motion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Maximize } from "lucide-react";
 
@@ -60,14 +61,12 @@ export default function Lightbox({
   if (!isBrowser || !current) return null;
 
   // Mobile swipe gesture
-  const handleTouchStart = (e) => {
-    startX.current = e.changedTouches[0].clientX;
-  };
-
+  const handleTouchStart = (e) =>
+    (startX.current = e.changedTouches[0].clientX);
   const handleTouchEnd = (e) => {
     const diff = startX.current - e.changedTouches[0].clientX;
-    if (diff > SWIPE_THRESHOLD) onNext?.();
-    else if (diff < -SWIPE_THRESHOLD) onPrev?.();
+    if (diff > SWIPE_THRESHOLD) onNext();
+    if (diff < -SWIPE_THRESHOLD) onPrev();
   };
 
   return createPortal(
@@ -109,8 +108,8 @@ export default function Lightbox({
               loading="lazy"
               src={current.embedUrl}
               className="w-full h-[70vh] max-h-[90vh] shadow-lg"
-              allowFullScreen
               allow="autoplay; encrypted-media"
+              allowFullScreen
               referrerPolicy="no-referrer"
             />
           ) : (
@@ -137,6 +136,8 @@ export default function Lightbox({
 
           {/* Footer */}
           <div className="absolute bottom-0 left-0 right-0 bg-white h-12 flex items-center justify-between px-4">
+
+            {/* Arrows */}
             <div className="flex gap-2 items-center">
               <button
                 type="button"
@@ -156,11 +157,12 @@ export default function Lightbox({
               </button>
             </div>
 
+            {/* Index */}
             <div className="text-black text-sm font-medium">
               {currentIndex + 1} / {galleryItems.length}
             </div>
 
-            {/* Open externally */}
+            {/* Fullscreen / external open */}
             {current.type === "image" ? (
               <button
                 type="button"

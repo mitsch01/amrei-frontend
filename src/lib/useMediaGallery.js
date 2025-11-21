@@ -59,7 +59,7 @@ export function useMediaGallery(article) {
         safeLinkProps: {
           target: "_blank",
           rel: "noopener noreferrer",
-          referrerPolicy: "no-referrer",
+          referrerPolicy: "no-referrer"
         }
       }
     })
@@ -75,7 +75,8 @@ export function useMediaGallery(article) {
   // MERGED GALLERY (videos → images)
   // ---------------------------
   const galleryItems = useMemo(() => {
-    return [...sortedVideos, ...images]
+    const mergedItems = [...sortedVideos, ...images]
+    return mergedItems
   }, [sortedVideos, images])
 
   // ---------------------------
@@ -91,7 +92,6 @@ export function useMediaGallery(article) {
 
   const closeLightbox = () => setLightboxOpen(false)
 
-  // FIXED: must use galleryItems.length (not images.length)
   const prev = () =>
     setCurrentIndex(i =>
       i === 0 ? galleryItems.length - 1 : i - 1
@@ -109,10 +109,8 @@ export function useMediaGallery(article) {
     images,
     videos: sortedVideos,
     galleryItems,
-
     lightboxOpen,
     currentIndex,
-
     openLightbox,
     closeLightbox,
     prev,

@@ -14,8 +14,8 @@ export function VideoList({ videos }) {
               src={embed}
               className="w-full h-full"
               loading="lazy"
+              allow="autoplay; encrypted-media; fullscreen"
               allowFullScreen
-              referrerPolicy="no-referrer"
             />
           </div>
         )

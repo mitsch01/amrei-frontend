@@ -11,7 +11,6 @@ import { ImageGallery } from '../components/ImageGallery'
 export default function DetailPage() {
   const { slug } = useParams()
   const { article, related, loading } = useArticleDetail(slug)
-  console.log(article)
 
   const {
     images,
@@ -21,8 +20,8 @@ export default function DetailPage() {
     currentIndex,
     openLightbox,
     closeLightbox,
-    nextImage,
-    prevImage,
+    next,
+    prev,
   } = useMediaGallery(article)
 
   if (loading) return <div className="py-12 px-4">Loading…</div>
@@ -58,11 +57,11 @@ export default function DetailPage() {
       {/* Lightbox */}
       {lightboxOpen && (
         <Lightbox
-          images={galleryItems}
+          galleryItems={galleryItems}
           currentIndex={currentIndex}
           onClose={closeLightbox}
-          onPrev={prevImage}
-          onNext={nextImage}
+          onPrev={prev}
+          onNext={next}
         />
       )}
     </div>

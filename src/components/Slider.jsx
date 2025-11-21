@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function RelatedSlider({ items }) {
   const safeItems = Array.isArray(items) ? items : [];
   const baseURL = import.meta.env.VITE_API_URL
-  console.log(safeItems);
+  // console.log(safeItems);
 
 
   const settings = {
