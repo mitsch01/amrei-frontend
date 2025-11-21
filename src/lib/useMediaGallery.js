@@ -75,9 +75,9 @@ export function useMediaGallery(article) {
   // MERGED GALLERY (videos → images)
   // ---------------------------
   const galleryItems = useMemo(() => {
-    const mergedItems = [...sortedVideos, ...images]
+    const mergedItems = [...images]
     return mergedItems
-  }, [sortedVideos, images])
+  }, [images])
 
   // ---------------------------
   // LIGHTBOX STATE
@@ -85,22 +85,27 @@ export function useMediaGallery(article) {
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const openLightbox = index => {
-    setCurrentIndex(index)
+  const openLightbox = imageIndex => {
+    // When opening the lightbox, we need to find the correct index
+    // within the galleryItems (which now only contain images).
+    // The `imageIndex` here refers to the index within the `images` array.
+    setCurrentIndex(imageIndex)
     setLightboxOpen(true)
   }
 
   const closeLightbox = () => setLightboxOpen(false)
 
-  const prev = () =>
+  const prev = () => {
     setCurrentIndex(i =>
       i === 0 ? galleryItems.length - 1 : i - 1
     )
+  }
 
-  const next = () =>
+  const next = () => {
     setCurrentIndex(i =>
       i === galleryItems.length - 1 ? 0 : i + 1
     )
+  }
 
   // ---------------------------
   // RETURN API
