@@ -1,5 +1,6 @@
 import { marked } from 'marked'
 import { useUniversalPage } from '../lib/useUniversalPage'
+import { ContactForm } from '../components/ContactForm'
 
 export default function UniversalPage({slug}) {
   const {data, loading} = useUniversalPage(slug)
@@ -14,7 +15,8 @@ export default function UniversalPage({slug}) {
         <div
           className="prose text-gray-700 max-w-none"
           dangerouslySetInnerHTML={{ __html: marked(data.page.body || '') }}
-        />     
+        />    
+        < ContactForm></ContactForm> 
       </div>
     )
   }

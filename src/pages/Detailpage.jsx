@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom'
 import { marked } from 'marked'
 import Slider from '../components/Slider'
 import Lightbox from '../components/Lightbox'
+import { Breadcrumbs } from '../components/Breadcrumbs'
 
 import { useArticleDetail } from '../lib/useArticleDetail'
 import { useMediaGallery } from '../lib/useMediaGallery'
@@ -29,6 +30,9 @@ export default function DetailPage() {
 
   return (
     <div className="py-12 px-4 max-w-6xl mx-auto">
+      <Breadcrumbs
+        articleTitle={article.title}
+      />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
         {/* LEFT SIDE: media */}

@@ -1,9 +1,13 @@
 import { marked } from 'marked'
-import GalleryGrid from '../components/GalleryGrid'
 import { useUniversalPage } from '../lib/useUniversalPage'
+import { Link } from 'react-router-dom';
+import { useArticles } from '../lib/useArticles'
+import Slider from '../components/Slider'
 
-export default function BookingPage({slug}) {
- const {data, loading} = useUniversalPage(slug)
+
+export default function BookingPage({ slug }) {
+  const { data, loading } = useUniversalPage(slug)
+  const { articles } = useArticles({ categorySlugs: [data.page?.slug || slug] })
 
   if (loading) return <div className="py-12 px-4">Loading…</div>
 
@@ -11,15 +15,15 @@ export default function BookingPage({slug}) {
     return (
       <div className="py-12 px-4 max-w-6xl mx-auto">
         <h2 className="text-2xl font-semibold mb-4">{data.page.title}</h2>
-        {data.page.quote && <p className="text-gray-700 mb-4">{data.page.quote}</p>}
+        {data.page.quote && <p className="text-gray-500 mb-4 italic text-right">{data.page.quote}</p>}
         <div
-          className="prose text-gray-700 max-w-none"
+          className="prose text-gray-700 max-w-none mb-16"
           dangerouslySetInnerHTML={{ __html: marked(data.page.body || '') }}
         />
-        <button className="bg-black text-white border border-black mt-8 px-6 py-2 rounded font-semibold hover:bg-white hover:text-black transition-colors duration-300">
+        <Link className="bg-black text-white border border-black px-6 py-2 rounded font-semibold hover:bg-white hover:text-black transition-colors duration-300 inline-block mb-12" to="/contact">
           Jetzt buchen
-        </button> 
-        <GalleryGrid items={slug}/>
+        </Link>
+        <Slider items={articles} />
       </div>
     )
   }

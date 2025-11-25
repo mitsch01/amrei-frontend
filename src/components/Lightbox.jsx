@@ -20,7 +20,6 @@ export default function Lightbox({
 
   const startX = useRef(0);
   const dialogRef = useRef(null);
-  const openerRef = useRef(null);
   const titleId = "lightbox-title";
 
   // Prevent background scroll
@@ -49,15 +48,6 @@ export default function Lightbox({
     return () => window.removeEventListener("keydown", handleKey);
   }, [isBrowser, handleKey]);
 
-  // Focus on open, restore on close
-  useEffect(() => {
-    if (!isBrowser) return;
-    openerRef.current = document.activeElement;
-    const dialog = dialogRef.current;
-    dialog?.focus();
-    return () => openerRef.current?.focus?.();
-  }, [isBrowser]);
-
   if (!isBrowser || !current) return null;
 
   // Mobile swipe gesture
@@ -83,7 +73,7 @@ export default function Lightbox({
       >
         <motion.div
           role="document"
-          key={current.url || current.embedUrl}
+          key={current.url}
           className="relative w-fit max-w-4xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -99,30 +89,12 @@ export default function Lightbox({
             Media lightbox
           </h2>
 
-          {/* ---------------------------
-              VIDEO
-          ---------------------------- */}
-          {current.type === "video" ? (
-            <iframe
-              title={current.title || "Video"}
-              loading="lazy"
-              src={current.embedUrl}
-              className="w-full h-[70vh] max-h-[90vh] shadow-lg"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              referrerPolicy="no-referrer"
-            />
-          ) : (
-            /* ---------------------------
-               IMAGE
-            ---------------------------- */
-            <img
-              loading="lazy"
-              src={current.url}
-              alt={current.alt || ""}
-              className="w-full h-auto object-contain max-h-[90vh] shadow-lg"
-            />
-          )}
+          <img
+            loading="lazy"
+            src={current.url}
+            alt={current.alt || ""}
+            className="w-full h-auto object-contain max-h-[90vh] shadow-lg"
+          />
 
           {/* Close button */}
           <button
@@ -135,7 +107,7 @@ export default function Lightbox({
           </button>
 
           {/* Footer */}
-          <div className="absolute bottom-0 left-0 right-0 bg-white h-12 flex items-center justify-between px-4">
+          <div className="absolute -bottom-12 left-0 right-0 bg-white h-12 flex items-center justify-between px-4">
 
             {/* Arrows */}
             <div className="flex gap-2 items-center">
@@ -163,33 +135,20 @@ export default function Lightbox({
             </div>
 
             {/* Fullscreen / external open */}
-            {current.type === "image" ? (
-              <button
-                type="button"
-                onClick={() =>
-                  window.open(
-                    current.url,
-                    "_blank",
-                    "noopener,noreferrer"
-                  )
-                }
-                aria-label="Open full size"
-                className="text-black hover:text-[#F2D377]"
-              >
-                <Maximize size={20} />
-              </button>
-            ) : (
-              <a
-                href={current.url || current.embedUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                referrerPolicy="no-referrer"
-                aria-label="Open video externally"
-                className="text-black hover:text-[#F2D377]"
-              >
-                <Maximize size={20} />
-              </a>
-            )}
+            <button
+              type="button"
+              onClick={() =>
+                window.open(
+                  current.url,
+                  "_blank",
+                  "noopener,noreferrer"
+                )
+              }
+              aria-label="Open full size"
+              className="text-black hover:text-[#F2D377]"
+            >
+              <Maximize size={20} />
+            </button>
           </div>
         </motion.div>
       </motion.div>

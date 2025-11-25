@@ -2,7 +2,18 @@ import SliderLib from "react-slick";
 import { Link } from "react-router-dom";
 
 export default function RelatedSlider({ items }) {
-  const safeItems = Array.isArray(items) ? items : [];
+  const safeItems = Array.isArray(items) ? [...items].sort((a, b) => {
+    if (a.position && b.position) {
+      return a.position - b.position;
+    }
+    if (a.position) {
+      return -1;
+    }
+    if (b.position) {
+      return 1;
+    }
+    return 0;
+  }) : [];
   const baseURL = import.meta.env.VITE_API_URL
   // console.log(safeItems);
 
@@ -23,7 +34,7 @@ export default function RelatedSlider({ items }) {
 
   return (
     <div className="py-8">
-      <h3 className="text-lg font-semibold mb-4 px-4">Related Work</h3>
+      <h4 className="font-semibold mb-4">Related Work</h4>
 
       {safeItems.length === 0 ? (
         <div className="text-center text-gray-500 py-8">
@@ -34,7 +45,7 @@ export default function RelatedSlider({ items }) {
           {safeItems.map((item) => {
             const imgUrl = item.cover?.url
             return (
-              <div key={item.id} className="px-2">
+              <div key={item.id} className="pr-4">
                 <Link
                   to={`/articles/${item.slug}`}
                   className="relative block aspect-square overflow-hidden group"
