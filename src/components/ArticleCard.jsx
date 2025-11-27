@@ -1,8 +1,23 @@
 import { Link } from 'react-router-dom'
 import { getMediaUrl } from '../lib/media'
 
-export default function ArticleCard({ item, className = '' }) {
+export default function ArticleCard({ item, className = '', decorative = false }) {
   const img = getMediaUrl(item.cover, 'medium')
+
+  if (decorative) {
+    return (
+      <div
+        className={`relative block overflow-hidden cursor-default pointer-events-none ${className}`}
+        aria-hidden="true"
+      >
+        <img
+          src={img}
+          alt={item.title}
+          className="w-full h-auto object-cover"
+        />
+      </div>
+    )
+  }
 
   return (
     <Link

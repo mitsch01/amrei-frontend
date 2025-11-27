@@ -1,6 +1,6 @@
 import ArticleCard from './ArticleCard'
 
-export default function GalleryGrid({ items = [] }) {
+export default function GalleryGrid({ items = [], decorative = false }) {
   const safeItems = Array.isArray(items) ? [...items].sort((a, b) => {
     if (a.position && b.position) {
       return a.position - b.position;
@@ -24,7 +24,12 @@ export default function GalleryGrid({ items = [] }) {
         ) : (
           safeItems.map(item => (
             <div key={item.id} className="break-inside-avoid">
-              <ArticleCard key={item.id} item={item} showMeta={false} />
+              <ArticleCard
+                key={item.id}
+                item={item}
+                showMeta={false}
+                decorative={decorative}
+              />
             </div>
           ))
         )}

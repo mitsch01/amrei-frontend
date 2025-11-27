@@ -53,8 +53,17 @@ body,
   height: 100%;
 }
 
+.prose p {
+  margin-bottom: 1.25rem; /* 20px */
+}
+
 p > a {
   color: #80b9bf;
+}
+
+hr {
+  margin-top: 4rem;
+  color: white
 }
 
 @layer base {
