@@ -53,7 +53,7 @@ export default function BookingPage({ slug }) {
           className="bg-black text-white border border-black px-6 py-2 rounded font-semibold hover:bg-white hover:text-black transition-colors duration-300 inline-block mb-24 ml-auto"
           to="/contact"
         >
-          Book Now
+          Anfrage senden
         </Link>
       </div>
 

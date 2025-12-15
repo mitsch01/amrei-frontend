@@ -3,11 +3,22 @@ import { getMediaUrl } from '../lib/media'
 
 export default function ArticleCard({ item, className = '', decorative = false }) {
   const img = getMediaUrl(item.cover, 'medium')
+  const isSkizzenCategory = item?.categories?.some(
+    (cat) => cat?.name?.toLowerCase() === 'skizzen und animationen'
+  )
 
-  if (decorative) {
+  const hasContent = Boolean(item?.body && item.body.trim())
+  const isDecorative =
+    decorative ||
+    item?.decorative ||
+    item?.coverOnly ||
+    !item?.slug || // without slug we should not link
+    (!hasContent && isSkizzenCategory) // only show cover within this category
+
+  if (isDecorative) {
     return (
       <div
-        className={`relative block overflow-hidden cursor-default pointer-events-none ${className}`}
+        className={`relative block overflow-hidden cursor-default pointer-events-none p-12 ${className}`}
         aria-hidden="true"
       >
         <img

@@ -16,7 +16,7 @@ export default function GalleryGrid({ items = [], decorative = false }) {
 
   return (
     <div>
-      <div className="columns-2 md:columns-4 gap-2 space-y-2 mt-24">
+      <div className="columns-2 md:columns-4 gap-4 space-y-4 mt-2">
         {safeItems.length === 0 ? (
           <div className="text-center text-gray-500 py-8">
             No items found.

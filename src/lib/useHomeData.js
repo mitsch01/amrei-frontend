@@ -11,7 +11,7 @@ export function useHomeData() {
       try {
         const [homeRes, articlesRes] = await Promise.all([
           fetchAPI('home?populate=*'),
-          fetchAPI('articles?populate=*'),
+          fetchAPI('articles?populate=*&pagination[pageSize]=200&sort=createdAt:desc'),
         ])
 
         setHome(homeRes?.data || null)

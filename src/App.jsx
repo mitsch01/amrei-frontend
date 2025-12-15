@@ -5,6 +5,7 @@ import UniversalPage from './pages/UniversalPage.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import BookingPage from './pages/BookingPage.jsx'
+import Services from './pages/Services.jsx'
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/articles/:slug" element={<DetailPage />} />
+            <Route path="/services" element={<Services />} />
             <Route path="/books" element={<BookingPage slug="books" />} />
             <Route path="/workshops" element={<BookingPage slug="workshops" />} />
             <Route path="/collaborations" element={<BookingPage slug="collaborations" />} />
