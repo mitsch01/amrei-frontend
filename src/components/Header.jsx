@@ -34,14 +34,13 @@ export default function Header() {
           >
             <NavLink to="/services" className="nav-link inline-flex items-center gap-2">
               Leistungen
-              <span className="text-base">▾</span>
             </NavLink>
 
             {servicesOpen && (
-              <div className="absolute right-0 mt-3 w-56 rounded-md border bg-white shadow-lg py-3 px-4 space-y-3">
-                <NavLink to="/books" className="block nav-link text-base">Bücher</NavLink>
-                <NavLink to="/workshops" className="block nav-link text-base">Workshops</NavLink>
-                <NavLink to="/collaborations" className="block nav-link text-base">Kollaborationen</NavLink>
+              <div className="absolute left-0 w-auto rounded-sm   shadow-lg py-3 px-4 space-y-3">
+                <NavLink to="/books" className="block text-base"><span className="nav-link">Bücher</span></NavLink>
+                <NavLink to="/workshops" className="block text-base"><span className="nav-link">Workshops</span></NavLink>
+                <NavLink to="/collaborations" className="block text-base"><span className="nav-link">Kollaborationen</span></NavLink>
               </div>
             )}
           </div>
