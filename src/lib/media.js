@@ -1,5 +1,5 @@
 // lib/media.js
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:1337"
+const BASE_URL = import.meta.env.VITE_API_URL
 
 /**
  * Returns a full URL for Strapi media

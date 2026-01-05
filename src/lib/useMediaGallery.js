@@ -1,8 +1,19 @@
 import { useMemo, useState } from "react"
-import { getEmbedUrl, getYoutubeId } from "./video"   // <-- updated import
+import { getEmbedUrl, getYoutubeId } from "./video"
+
+// Helper function to get full URL (handles both absolute and relative)
+function getFullUrl(url, baseURL) {
+  if (!url) return null
+  // If URL is already absolute, return as-is
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url
+  }
+  // Otherwise, prepend baseURL for relative URLs
+  return `${baseURL}${url}`
+}
 
 export function useMediaGallery(article) {
-  const baseURL = import.meta.env.VITE_API_URL || "http://localhost:1337"
+  const baseURL = import.meta.env.VITE_API_URL
 
   // ---------------------------
   // IMAGES
@@ -17,12 +28,14 @@ export function useMediaGallery(article) {
 
     return rawImages.map(img => ({
       type: "image",
-      url: img.formats?.large?.url
-        ? `${baseURL}${img.formats.large.url}`
-        : `${baseURL}${img.url}`,
-      thumbnail: img.formats?.small?.url
-        ? `${baseURL}${img.formats.small.url}`
-        : `${baseURL}${img.url}`,
+      url: getFullUrl(
+        img.formats?.large?.url || img.url,
+        baseURL
+      ),
+      thumbnail: getFullUrl(
+        img.formats?.small?.url || img.url,
+        baseURL
+      ),
       alt: img.alternativeText || "",
       id: img.id,
     }))
@@ -40,12 +53,11 @@ export function useMediaGallery(article) {
       const embedUrl = getEmbedUrl(v.videoLink)
 
       // Thumbnail logic:
-      const thumbnail =
-        v.cover
-          ? `${baseURL}${v.cover.url}`                           // Strapi custom cover
-          : id
-            ? `https://img.youtube.com/vi/${id}/hqdefault.jpg`  // YouTube generated
-            : "/fallback-video-thumbnail.jpg"                    // fallback
+      const thumbnail = v.cover
+        ? getFullUrl(v.cover.url, baseURL)  // Use helper function
+        : id
+          ? `https://img.youtube.com/vi/${id}/hqdefault.jpg`
+          : "/fallback-video-thumbnail.jpg"
 
       return {
         type: "video",
@@ -55,7 +67,6 @@ export function useMediaGallery(article) {
         thumbnail,
         title: v.videoTitle,
         position: v.position ?? 0,
-
         safeLinkProps: {
           target: "_blank",
           rel: "noopener noreferrer",
@@ -64,6 +75,8 @@ export function useMediaGallery(article) {
       }
     })
   }, [article, baseURL])
+
+// ... rest of your code stays the same
 
 
   // Sorted by "position"
