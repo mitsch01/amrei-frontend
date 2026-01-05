@@ -1,6 +1,9 @@
 export async function fetchAPI(path) {
   try {
-    const base = import.meta.env.VITE_API_URL
+    const base = import.meta.env.VITE_API_URL || "http://localhost:1337"
+    console.log("🔍 VITE_API_URL:", import.meta.env.VITE_API_URL)
+    console.log("🔍 Using base:", base)
+
     const res = await fetch(`${base}/api/${path}`);
 
     if (!res.ok) {
