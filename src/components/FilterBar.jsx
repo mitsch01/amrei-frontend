@@ -5,6 +5,11 @@ export default function FilterBar({
 }) {
   const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1)
 
+  // Sort tags alphabetically by name
+  const sortedTags = [...tags].sort((a, b) =>
+    a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })
+  )
+
   return (
     <div className="pb-6">
       <div className="flex gap-3 flex-wrap">
@@ -21,7 +26,7 @@ export default function FilterBar({
         </button>
 
         {/* Category buttons */}
-        {tags.map(tag => (
+        {sortedTags.map(tag => (
           <button
             key={tag.id}
             onClick={() => onChange(tag.name)}

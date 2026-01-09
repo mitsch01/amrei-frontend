@@ -1,56 +1,51 @@
 import { Link } from 'react-router-dom'
+import { useFetch } from '../lib/useFetch'
 
-const services = [
-  {
-    title: 'Bücher',
-    description: 'Geschichten, Illustrationen und Publikationen zum Entdecken.',
-    to: '/books',
-  },
-  {
-    title: 'Workshops',
-    description: 'Kreative Formate für Teams, Schulen und Events.',
-    to: '/workshops',
-  },
-  {
-    title: 'Kollaborationen',
-    description: 'Gemeinsame Projekte mit Marken, Verlagen und Partner:innen.',
-    to: '/collaborations',
-  },
-  {
-    title: 'Skizzen und Animationen',
-    description: 'Ein weiteres Format folgt bald – schon jetzt vormerken lassen.',
-    to: null,
-    comingSoon: true,
-  },
-]
+const STRAPI_URL = import.meta.env.VITE_API_URL
 
 export default function Services() {
+  const { data: cards, loading, error } = useFetch('cards?populate=image')
+  console.log("cards:", cards)
+
+  if (loading) {
+    return <div className="py-12 text-center">Loading services…</div>
+  }
+
+  if (error || !Array.isArray(cards)) {
+    return <div className="py-12 text-center">Failed to load services.</div>
+  }
+
   return (
     <div className="py-12 px-4 max-w-6xl mx-auto">
       <h2 className="text-3xl font-semibold mb-4">Leistungen</h2>
-      <p className="text-lg text-gray-700 mb-10 max-w-3xl">
-        Entdecken Sie die Angebote von Amrei Fiedler. Wählen Sie direkt aus den Kategorien
-        oder lernen Sie alle Leistungen auf einen Blick kennen.
-      </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {services.map(service => {
-          const Card = service.to ? Link : 'div'
+        {cards.map(card => {
+          const Card = card.slug ? Link : 'div'
+
           return (
             <Card
-              key={service.title}
-              to={service.to || undefined}
-              className="block rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:shadow-md"
+              key={card.id}
+              to={card.slug ? `/${card.slug}` : undefined}
+              className="block bg-[#F2D377] p-6 transition-transform hover:-translate-y-1"
             >
-              <div className="flex items-start justify-between mb-2">
-                <h3 className="text-2xl font-semibold">{service.title}</h3>
-                {service.comingSoon && (
-                  <span className="text-xs font-semibold uppercase tracking-wide text-gray-600 bg-gray-100 px-2 py-1 rounded">
-                    Bald
-                  </span>
-                )}
-              </div>
-              <p className="text-gray-700 leading-relaxed">{service.description}</p>
+              {card.image && (
+                <img
+                  src={card.image.url}
+                  alt={card.title}
+                  className="mb-4 w-full h-40 object-cover"
+                />
+              )}
+
+              <h3 className="text-2xl font-semibold mb-2">
+                {card.title}
+              </h3>
+
+              {card.body && (
+                <p className="text-gray-700">
+                  {card.body}
+                </p>
+              )}
             </Card>
           )
         })}
@@ -58,4 +53,3 @@ export default function Services() {
     </div>
   )
 }
-

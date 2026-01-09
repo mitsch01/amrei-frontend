@@ -40,7 +40,7 @@ export default function Header() {
               <div className="absolute left-0 w-auto rounded-sm   shadow-lg py-3 px-4 space-y-3">
                 <NavLink to="/books" className="block text-base"><span className="nav-link">Bücher</span></NavLink>
                 <NavLink to="/workshops" className="block text-base"><span className="nav-link">Workshops</span></NavLink>
-                <NavLink to="/collaborations" className="block text-base"><span className="nav-link">Kollaborationen</span></NavLink>
+                <NavLink to="/collaborations" className="block text-base"><span className="nav-link">Collabs</span></NavLink>
               </div>
             )}
           </div>
