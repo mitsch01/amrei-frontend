@@ -6,14 +6,20 @@ export default function ArticleCard({ item, className = '', decorative = false }
   const isSkizzenCategory = item?.categories?.some(
     (cat) => cat?.name?.toLowerCase() === 'skizzen und animationen'
   )
+  const isCollaborationsCategory = item?.categories?.some(
+    (cat) => cat?.name?.toLowerCase() === 'kollaborationen'
+  )
+  const isWorkshopsCategory = item?.categories?.some(
+    (cat) => cat?.name?.toLowerCase() === 'workshops'
+  )
 
   const hasContent = Boolean(item?.body && item.body.trim())
   const isDecorative =
     decorative ||
     item?.decorative ||
     item?.coverOnly ||
-    !item?.slug || // without slug we should not link
-    (!hasContent && isSkizzenCategory) // only show cover within this category
+    !item?.slug ||
+    (!hasContent && isSkizzenCategory)
 
   if (isDecorative) {
     return (
@@ -40,7 +46,7 @@ export default function ArticleCard({ item, className = '', decorative = false }
       <img
         src={img}
         alt={item.title}
-        className="w-full h-auto object-cover"
+        className={`w-full ${isCollaborationsCategory ? 'aspect-square' : 'h-auto'} object-cover ${isWorkshopsCategory ? 'opacity-80' : ''}`}
       />
 
       {/* Overlay */}
