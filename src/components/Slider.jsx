@@ -14,9 +14,6 @@ export default function RelatedSlider({ items }) {
     }
     return 0;
   }) : [];
-  const baseURL = import.meta.env.VITE_API_URL
-  // console.log(safeItems);
-
 
   const settings = {
     dots: false,
@@ -51,7 +48,7 @@ export default function RelatedSlider({ items }) {
                   className="relative block aspect-square overflow-hidden group"
                 >
                   <img
-                    src={`${baseURL}${imgUrl}`}
+                    src={imgUrl}
                     alt={item.title}
                     className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                   />
