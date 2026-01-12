@@ -2,20 +2,13 @@ import { NavLink, Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useFetch } from '../lib/useFetch'
 import { getMediaUrl } from '../lib/media'
-import { useUniversalPage } from "../lib/useUniversalPage";
 
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
   const { data: globalData } = useFetch('global?populate=logo')
-  const { data, loading } = useUniversalPage('leistungen');
-  console.log("services:", services)
 
   const logo = getMediaUrl(globalData?.logo)
-
-  const services = data.articles || [];
-
-  if (loading) return null; // or a loader if you want
 
   return (
     <header>
@@ -44,16 +37,11 @@ export default function Header() {
             </NavLink>
 
             {servicesOpen && (
-              <div className="absolute left-0 w-auto rounded-sm shadow-lg py-3 px-4 space-y-3">
-                {services.map(service => (
-                  <NavLink
-                    key={service.id}
-                    to={`/${service.slug}`}
-                    className="block text-base"
-                  >
-                    {service.title}
-                  </NavLink>
-                ))}
+              <div className="absolute left-0 w-auto rounded-sm   shadow-lg py-3 px-4 space-y-3">
+                <NavLink to="/books" className="block text-base"><span className="nav-link">Bücher</span></NavLink>
+                <NavLink to="/workshops" className="block text-base"><span className="nav-link">Workshops</span></NavLink>
+                <NavLink to="/collaborations" className="block text-base"><span className="nav-link">Collabs</span></NavLink>
+                <NavLink to="/custom-order" className="block text-base"><span className="nav-link">Animationen</span></NavLink>
               </div>
             )}
           </div>
